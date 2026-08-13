@@ -1,0 +1,42 @@
+<!-- @dsCard group="Site vitrine" viewport="1280x820" subtitle="Page d'accueil bledilink — héro, étapes, règles, FAQ" -->
+<!-- @startingPoint section="Site vitrine" subtitle="Page d'accueil Bledi (marketing)" viewport="1280x820" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>Bledi — Objet oublié au bled ?</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--color-bg);font-family:var(--font-sans);color:var(--text-primary)}
+  a:hover{color:var(--text-brand)}
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+<script>window.__DS_BASE__ = "../../";</script>
+<script src="../../_ds_bundle.js" onerror="window.__dsBundleMissing=1"></script>
+<script src="../../ds-fallback.js?v=17"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+(async () => {
+try {
+  const NS = await window.BlediResolve();
+  const src = (await (await fetch('./Landing.jsx')).text())
+    .split('\n').filter((l) => !/^\s*import\s/.test(l)).join('\n')
+    .split('export function').join('function');
+  const code = Babel.transform('function __f(React){' + src + '\nreturn Landing;}', { presets: [['react', { runtime: 'classic' }]] }).code;
+  const Landing = new Function(code + '\nreturn __f;')()(React);
+  const { TopNav } = NS;
+  function Site() {
+    return (
+      <>
+        <TopNav active="" logoSrc="../../assets/bledi-logo.png" />
+        <Landing NS={NS} />
+      </>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Site />);
+} catch (e) {
+  document.getElementById('root').textContent = 'DS ERROR: ' + (e && e.message);
+}
+})();
+</script>
+</body></html>

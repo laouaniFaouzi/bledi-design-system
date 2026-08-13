@@ -1,0 +1,38 @@
+<!-- @dsCard group="Brand" viewport="700x230" subtitle="Pastille « B » de profil vérifié — placement et tailles" name="Brand Verified Mark" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--color-bg);font-family:var(--font-sans);color:var(--text-primary);padding:20px;box-sizing:border-box}
+</style></head><body>
+<div style="display:flex;flex-direction:column;gap:18px">
+  <div style="display:flex;align-items:center;gap:26px;flex-wrap:wrap">
+    <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px"><span class="m" data-s="14"></span> 14 px · liste</span>
+    <span style="display:inline-flex;align-items:center;gap:6px;font-size:15px"><span class="m" data-s="18"></span> 18 px · défaut</span>
+    <span style="display:inline-flex;align-items:center;gap:8px;font-size:24px"><span class="m" data-s="26"></span> 26 px · profil</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <span style="display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:500">Karim B. <span class="m" data-s="18"></span></span>
+    <span style="display:inline-flex;align-items:center;gap:6px;background:var(--gradient-panel);color:var(--text-on-dark);border-radius:999px;padding:8px 14px;font-size:15px">Nadia K. <span class="m" data-s="18" data-t="onDark"></span></span>
+  </div>
+  <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;max-width:62ch">
+    Toujours collée au nom, à 6 px. Vert cerclé d'or sur fond clair, or plein sur panneau vert.
+    Elle atteste d'un <strong>profil</strong> vérifié — un trajet vérifié garde son badge texte « Trajet vérifié Bledi ».
+    Jamais dans un titre, jamais seule sans nom.
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.m').forEach(el => {
+    const s = +el.dataset.s, dark = el.dataset.t === 'onDark';
+    Object.assign(el.style, {
+      width: s+'px', height: s+'px', flex:'0 0 auto', display:'inline-flex',
+      alignItems:'center', justifyContent:'center', borderRadius:'999px', boxSizing:'border-box',
+      background: dark ? 'var(--bledi-gold-400)' : 'var(--bledi-green-700)',
+      color: dark ? 'var(--bledi-green-900)' : '#fff',
+      border: dark ? 'none' : Math.max(1, s*0.075) + 'px solid var(--bledi-gold-400)',
+    });
+    el.innerHTML = '<img src="../assets/bledi-b-mark.png" alt="" style="width:' + (s*0.76) + 'px;height:' + (s*0.76) + 'px;object-fit:contain;display:block' + (dark ? ';filter:brightness(0) saturate(100%) invert(11%) sepia(38%) saturate(1600%) hue-rotate(120deg)' : '') + '">';
+  });
+</script>
+</body></html>

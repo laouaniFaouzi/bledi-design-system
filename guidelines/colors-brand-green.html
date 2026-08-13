@@ -1,0 +1,41 @@
+<!-- @dsCard group="Colors" viewport="700x150" subtitle="Le vert Bledi — surfaces sombres, actions primaires" name="Colors Brand Green" -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  html, body { margin: 0 }
+  body {
+    background: var(--color-bg);
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(7, 1fr) }
+  .sw {
+    border-radius: 12px;
+    height: 56px;
+    display: flex;
+    align-items: flex-end;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid var(--border-default);
+  }
+  .sw span { font-size: 10px; font-family: var(--font-mono), monospace }
+  .name { font-size: 11px; margin-top: 6px; color: var(--text-secondary) }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div><div class="sw" style="background:#072B1A"><span style="color:#fff">#072B1A</span></div><div class="name">--bledi-green-900</div></div>
+  <div><div class="sw" style="background:#0A3421"><span style="color:#fff">#0A3421</span></div><div class="name">--bledi-green-800</div></div>
+  <div><div class="sw" style="background:#0C3B26"><span style="color:#fff">#0C3B26</span></div><div class="name">--bledi-green-700</div></div>
+  <div><div class="sw" style="background:#14472C"><span style="color:#fff">#14472C</span></div><div class="name">--bledi-green-600</div></div>
+  <div><div class="sw" style="background:#1D5A38"><span style="color:#fff">#1D5A38</span></div><div class="name">--bledi-green-500</div></div>
+  <div><div class="sw" style="background:#E7EFE9"><span style="color:#14161A">#E7EFE9</span></div><div class="name">--bledi-green-100</div></div>
+  <div><div class="sw" style="background:#F1F4EE"><span style="color:#14161A">#F1F4EE</span></div><div class="name">--bledi-green-050</div></div>
+</div>
+</body>
+</html>

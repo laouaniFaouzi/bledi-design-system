@@ -1,0 +1,58 @@
+<!-- @dsCard group="Components" viewport="700x920" name="Domain" subtitle="Cartes métier : demande, trajet officiel, vérification, protection" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--color-bg);font-family:var(--font-sans);color:var(--text-primary);box-sizing:border-box}
+  .stack{display:flex;flex-direction:column;gap:16px}
+  .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  #root{padding:20px}
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+<script>window.__DS_BASE__ = "../../";</script>
+<script src="../../_ds_bundle.js" onerror="window.__dsBundleMissing=1"></script>
+<script src="../../ds-fallback.js?v=17"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+(async () => {
+try {
+const NS = await window.BlediResolve();
+const { Button, Badge, Chip, Avatar, Card, Alert, EmptyState, Icon, Field, Input, Textarea, Select, OptionToggle, SegmentedTabs, UnderlineTabs, TopNav, BottomNav, StepProgress, RouteLine, RequestCard, OfficialTripCard, TripBanner, VerificationRow, ProtectionPanel, RatingStars, Checkbox, Switch, CodeInput, PhotoUploader, Dialog, Toast, StatusTimeline, VerifiedMark, VerifiedName } = NS;
+function Demo(){
+  return (
+    <div className="stack">
+      <RequestCard
+        badges={<>
+          <Badge icon={<Icon name="plane" size={13}/>}>Avion</Badge>
+          <Badge tone="verified" icon={<Icon name="shield-check" size={13}/>}>Trajet vérifié Bledi</Badge>
+          <Badge icon={<Icon name="eye-off" size={13}/>}>Coordonnées masquées</Badge>
+          <Badge icon={<Icon name="credit-card" size={13}/>}>Paiement sécurisé</Badge>
+        </>}
+        category="Recherche accompagnement senior"
+        carrier="Air Algérie" flight="AH1009"
+        route={{from:'Paris CDG',fromCode:'CDG',fromTime:'10:30',to:'Alger — Houari Boumediene',toCode:'ALG',toTime:'12:35'}}
+        date="25 août 2026" author="Yacine T." budget="90 €"
+        message="Je recherche une personne de confiance pour accompagner mon père depuis l'enregistrement jusqu'à la remise à la famille à Alger."
+        details={<><div><strong>Mon père</strong> · 78 · Aide légère · arabe</div><div>Aide pour : enregistrement, bagages, embarquement, remise à la famille</div></>}
+        notices={<Alert tone="notice" icon={<Icon name="alert" size={16}/>}>Ne partagez pas d'informations médicales sensibles dans l'annonce publique.</Alert>}
+        action={<Button block>Proposer mon aide</Button>}/>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'12px'}}>
+        <OfficialTripCard carrier="Corsica Linea" reference="CL-MRS-AAE-04" route="Marseille → Annaba" date="Jeudi 13 août 2026" times="20:00 → 16:00 (J+1)"/>
+        <OfficialTripCard selected carrier="Corsica Linea" reference="CL-MRS-AAE-04" route="Marseille → Annaba" date="Jeudi 20 août 2026" times="20:00 → 16:00 (J+1)"/>
+      </div>
+      <TripBanner title="Corsica Linea · CL-MRS-AAE-04" route="Marseille → Annaba" schedule="20 août 2026 · 20:00 → 16:00 (J+1)"/>
+      <VerificationRow icon={<Icon name="mail" size={16}/>} title="E-mail vérifié" description="Lien de confirmation envoyé à votre adresse."/>
+      <VerificationRow icon={<Icon name="id-card" size={16}/>} title="Pièce d'identité validée" description="Vérification via prestataire KYC (Stripe Identity / Mangopay)."/>
+      <ProtectionPanel description="Votre paiement est conservé en toute sécurité jusqu'à ce que vous confirmiez la bonne réception de votre colis."
+        points={['Transaction sécurisée',"Vérification d'identité",'Support 7j/7']} linkLabel="Besoin d'aide ?"/>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+} catch (e) { document.getElementById('root').textContent = 'DS ERROR: ' + (e && e.stack || e); }
+})();
+</script>
+</body></html>

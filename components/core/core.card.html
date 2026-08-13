@@ -1,0 +1,76 @@
+<!-- @dsCard group="Components" viewport="700x500" name="Core" subtitle="Boutons, badges, chips, avatars, alertes, état vide" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--color-bg);font-family:var(--font-sans);color:var(--text-primary);box-sizing:border-box}
+  .stack{display:flex;flex-direction:column;gap:16px}
+  .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  #root{padding:20px}
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+<script>window.__DS_BASE__ = "../../";</script>
+<script src="../../_ds_bundle.js" onerror="window.__dsBundleMissing=1"></script>
+<script src="../../ds-fallback.js?v=17"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+(async () => {
+try {
+const NS = await window.BlediResolve();
+const { Button, Badge, Chip, Avatar, Card, Alert, EmptyState, Icon, Field, Input, Textarea, Select, OptionToggle, SegmentedTabs, UnderlineTabs, TopNav, BottomNav, StepProgress, RouteLine, RequestCard, OfficialTripCard, TripBanner, VerificationRow, ProtectionPanel, RatingStars, Checkbox, Switch, CodeInput, PhotoUploader, Dialog, Toast, StatusTimeline, VerifiedMark, VerifiedName } = NS;
+function Demo(){
+  return (
+    <div className="stack">
+      <div className="row">
+        <Button variant="primary">Proposer mon aide</Button>
+        <Button variant="accent" iconRight={<Icon name="arrow-right" size={16}/>}>Récupérer mon objet</Button>
+        <Button variant="quiet" iconLeft={<Icon name="arrow-left" size={16}/>}>Retour</Button>
+        <Button variant="outline">Afficher les filtres</Button>
+        <Button variant="ghost">Besoin d'aide ?</Button>
+        <Button variant="primary" size="sm" iconLeft={<Icon name="plus" size={14}/>}>Publier</Button>
+        <Button variant="primary" disabled>Continuer</Button>
+      </div>
+      <div className="row">
+        <Badge icon={<Icon name="plane" size={13}/>}>Avion</Badge>
+        <Badge tone="verified" icon={<Icon name="shield-check" size={13}/>}>Trajet vérifié Bledi</Badge>
+        <Badge icon={<Icon name="eye-off" size={13}/>}>Coordonnées masquées</Badge>
+        <Badge icon={<Icon name="credit-card" size={13}/>}>Paiement sécurisé</Badge>
+        <Badge tone="brand">Recherche document</Badge>
+        <Badge tone="danger" icon={<Icon name="ban" size={13}/>}>Refusé</Badge>
+      </div>
+      <div className="row">
+        <Chip icon={<Icon name="plane" size={14}/>}>Paris ↔ Alger</Chip>
+        <Chip icon={<Icon name="ship" size={14}/>}>Marseille ↔ Oran</Chip>
+        <Chip selected icon={<Icon name="check" size={14}/>}>Lyon ↔ Constantine</Chip>
+        <Chip forbidden icon={<Icon name="ban" size={14}/>}>Argent liquide</Chip>
+        <Avatar initial="Y"/><Avatar initial="S" size="sm"/><Avatar initial="K" tone="muted"/>
+      </div>
+      <div className="row" style={{gap:'20px'}}>
+        <VerifiedName name="Karim B." verified markSrc="../../assets/bledi-b-mark.png"/>
+        <VerifiedName name="Vous V." verified size="var(--text-xl)" markSize={24} markSrc="../../assets/bledi-b-mark.png"/>
+        <VerifiedName name="Sofia B."/>
+        <span style={{display:'inline-flex',alignItems:'center',gap:6,background:'var(--gradient-panel)',color:'var(--text-on-dark)',borderRadius:'999px',padding:'8px 14px',fontSize:'var(--text-base)'}}>
+          Nadia K. <VerifiedMark tone="onDark" src="../../assets/bledi-b-mark.png"/>
+        </span>
+      </div>
+      <Alert tone="notice" icon={<Icon name="camera" size={16}/>}>
+        Une valise ne peut être acceptée que si elle est <strong>ouverte, photographiée, décrite et validée</strong>.
+      </Alert>
+      <Alert tone="neutral" icon={<Icon name="sparkles" size={16}/>}>
+        Astuce : <u>publiez ce trajet officiel</u> pour apparaître en priorité auprès du demandeur.
+      </Alert>
+      <Alert tone="danger">Ne transportez jamais un objet dont vous ne connaissez pas le contenu.</Alert>
+      <EmptyState icon={<Icon name="message" size={20}/>} title="Vous n'avez aucune demande publiée"
+        description="Publiez votre première demande sur un trajet officiel."
+        action={<Button size="sm">Publier une demande</Button>}/>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+} catch (e) { document.getElementById('root').textContent = 'DS ERROR: ' + (e && e.stack || e); }
+})();
+</script>
+</body></html>

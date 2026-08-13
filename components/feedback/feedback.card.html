@@ -1,0 +1,54 @@
+<!-- @dsCard group="Components" viewport="700x480" name="Feedback" subtitle="Modale, toasts, suivi de remise" -->
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--color-bg);font-family:var(--font-sans);color:var(--text-primary);box-sizing:border-box}
+  .stack{display:flex;flex-direction:column;gap:16px}
+  .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  #root{padding:20px}
+
+</style>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+<script>window.__DS_BASE__ = "../../";</script>
+<script src="../../_ds_bundle.js" onerror="window.__dsBundleMissing=1"></script>
+<script src="../../ds-fallback.js?v=17"></script>
+</head><body><div id="root"></div>
+<script type="text/babel">
+(async () => {
+try {
+const NS = await window.BlediResolve();
+const { Button, Badge, Chip, Avatar, Card, Alert, EmptyState, Icon, Field, Input, Textarea, Select, OptionToggle, SegmentedTabs, UnderlineTabs, TopNav, BottomNav, StepProgress, RouteLine, RequestCard, OfficialTripCard, TripBanner, VerificationRow, ProtectionPanel, RatingStars, Checkbox, Switch, CodeInput, PhotoUploader, Dialog, Toast, StatusTimeline, VerifiedMark, VerifiedName } = NS;
+function Demo(){
+  const [open,setOpen]=React.useState(false);
+  return (
+    <div className="stack">
+      <div className="row">
+        <Button variant="outline" onClick={()=>setOpen(true)}>Ouvrir la modale</Button>
+        <Toast>Demande publiée. Les voyageurs vérifiés vont la recevoir.</Toast>
+        <Toast tone="error">Code incorrect. Trois essais restants.</Toast>
+      </div>
+      <div style={{background:'var(--surface-card)',border:'1px solid var(--border-default)',borderRadius:'20px',padding:'20px'}}>
+        <StatusTimeline current={2} steps={[
+          {label:'Demande validée par Bledi',detail:'12 août · 09:14'},
+          {label:'Voyageur accepté',detail:'Karim B. · profil vérifié'},
+          {label:'Objet remis au voyageur'},
+          {label:'Remise confirmée par code'},
+          {label:'Paiement libéré'}]}/>
+      </div>
+      <div className="row"><RatingStars value={4.9} count={38}/><RatingStars value={5} size={20}/></div>
+      <Dialog open={open} onClose={()=>setOpen(false)}
+        title="Refuser cette demande ?"
+        description="Le demandeur sera informé. Vous pourrez toujours proposer votre aide sur une autre demande."
+        actions={<><Button variant="quiet" onClick={()=>setOpen(false)}>Annuler</Button><Button onClick={()=>setOpen(false)}>Refuser</Button></>}/>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+} catch (e) { document.getElementById('root').textContent = 'DS ERROR: ' + (e && e.stack || e); }
+})();
+</script>
+</body></html>

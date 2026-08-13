@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+/* Camera Plain — la police de titrage Bledi, fichier fourni par l'auteur.
+   Axe de graisse variable : une seule ressource couvre 300–800. */
+@font-face {
+  font-family: 'Camera Plain';
+  src: url('../assets/fonts/CameraPlainVariable.woff2') format('woff2-variations'),
+       url('../assets/fonts/CameraPlainVariable.woff2') format('woff2');
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
