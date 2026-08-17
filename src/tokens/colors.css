@@ -1,0 +1,68 @@
+:root {
+  /* --- Brand base --- */
+  --bledi-green-900: #072B1A;
+  --bledi-green-800: #0A3421;
+  --bledi-green-700: #0C3B26;   /* primary — buttons, header pills, logo bg */
+  --bledi-green-600: #14472C;
+  --bledi-green-500: #1D5A38;
+  --bledi-green-100: #E7EFE9;
+  --bledi-green-050: #F1F4EE;   /* selected option fill */
+
+  --bledi-gold-600: #C99A22;
+  --bledi-gold-500: #E0A82E;
+  --bledi-gold-400: #E9B949;    /* primary CTA on dark */
+  --bledi-gold-300: #EFC96F;
+  --bledi-gold-100: #FBF3DE;    /* warning / tip surface */
+
+  --bledi-cream-050: #FFFDFA;
+  --bledi-cream-100: #FDF7F0;   /* app background */
+  --bledi-cream-200: #F7F1E8;
+
+  --bledi-ink-900: #14161A;
+  --bledi-ink-700: #3D3F42;
+  --bledi-ink-500: #6B6B6B;
+  --bledi-ink-300: #9A9A98;
+
+  --bledi-neutral-000: #FFFFFF;
+  --bledi-neutral-100: #F3F2EE;  /* muted surface, avatar circles */
+  --bledi-neutral-200: #EAE6DE;  /* borders */
+
+  --bledi-red-600: #B3402F;
+  --bledi-red-100: #FBEDEA;
+
+  /* --- Semantic --- */
+  --color-bg: var(--bledi-cream-100);
+  --color-bg-inverse: var(--bledi-green-700);
+  --surface-card: var(--bledi-neutral-000);
+  --surface-muted: var(--bledi-neutral-100);
+  --surface-selected: var(--bledi-green-050);
+  --surface-notice: var(--bledi-gold-100);
+  --surface-danger: var(--bledi-red-100);
+
+  --border-default: var(--bledi-neutral-200);
+  --border-strong: rgba(12, 59, 38, 0.22);
+  --border-notice: rgba(224, 168, 46, 0.45);
+
+  --text-primary: var(--bledi-ink-900);
+  --text-secondary: var(--bledi-ink-500);
+  --text-muted: var(--bledi-ink-300);
+  --text-brand: var(--bledi-green-700);
+  --text-on-dark: #F4F1EA;
+  --text-on-dark-muted: rgba(244, 241, 234, 0.72);
+  --text-accent: var(--bledi-gold-400);
+  --text-danger: var(--bledi-red-600);
+
+  --action-primary-bg: var(--bledi-green-700);
+  --action-primary-fg: #FFFFFF;
+  --action-primary-bg-hover: var(--bledi-green-800);
+  --action-accent-bg: var(--bledi-gold-400);
+  --action-accent-fg: var(--bledi-green-900);
+  --action-accent-bg-hover: var(--bledi-gold-500);
+  --action-quiet-bg: var(--bledi-neutral-100);
+  --action-quiet-fg: var(--bledi-ink-900);
+
+  --focus-ring: 0 0 0 3px rgba(12, 59, 38, 0.18);
+
+  /* Dark panel gradient used on hero, CTA band, Protection Bledi */
+  --gradient-panel: radial-gradient(120% 140% at 85% 0%, #1B5636 0%, #0C3B26 45%, #072B1A 100%); /* @kind color */
+}
