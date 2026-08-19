@@ -27,6 +27,22 @@ import '@bledi/design-system/styles.css';
 aucune règle de composant n'y est injectée : tout le style vit dans les composants eux-mêmes, via
 `style={{ ... }}` référençant les tokens (`var(--action-primary-bg)`, etc.).
 
+## `dist/` est versionné
+
+Le dossier `dist/` fait partie du dépôt et **doit être reconstruit avant tout commit
+touchant `src/`** :
+
+```bash
+npm run build
+```
+
+Il n'y a volontairement aucun script `prepare` : une dépendance qui se compile chez
+son consommateur produit des résultats différents d'une machine à l'autre. Constaté
+sur le dépôt Bledi — le même commit produisait 19 Ko de déclarations en local et un
+fichier vide de 30 octets sur le runner d'intégration continue, d'où un `typecheck`
+rouge alors que l'application tournait. Ce que l'auteur construit est désormais ce
+que tout le monde reçoit.
+
 ## Développement local
 
 ```bash

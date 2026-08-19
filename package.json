@@ -18,6 +18,7 @@
       "require": "./dist/index.cjs"
     },
     "./styles.css": "./src/styles.css",
+    "./src/tokens/*": "./src/tokens/*",
     "./assets/*": "./assets/*"
   },
   "files": [
@@ -32,8 +33,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "oxlint -c .oxlintrc.json src",
     "examples": "vite --port 5173",
-    "examples:build": "vite build",
-    "prepare": "tsup"
+    "examples:build": "vite build"
   },
   "peerDependencies": {
     "react": ">=18",
