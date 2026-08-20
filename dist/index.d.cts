@@ -401,14 +401,62 @@ interface SwitchProps extends Omit<React.HTMLAttributes<HTMLLabelElement>, 'onCh
 }
 declare function Switch({ checked, onChange, label, hint, style, ...rest }: SwitchProps): React.JSX.Element;
 
-/**
- * Mobile tab bar: four destinations plus the raised green "Publier" action.
- */
-interface BottomNavProps extends React.HTMLAttributes<HTMLElement> {
-    active?: 'requests' | 'trips' | 'publish' | 'messages' | 'profile';
-    onNavigate?: (value: string) => void;
+/** Une destination de la navigation. `value` est libre : le consommateur y met ce qu'il veut. */
+interface NavItem {
+    value: string;
+    label: string;
+    icon: IconName;
+    /** Action mise en avant (pastille verte surélevée). BottomNav uniquement. */
+    primary?: boolean;
 }
-declare function BottomNav({ active, onNavigate, style, ...rest }: BottomNavProps): React.JSX.Element;
+/** Les quatre destinations par défaut, en français. */
+declare const defaultTopNavItems: NavItem[];
+/**
+ * En-tête d'application sur desktop : logo, destinations en pilules, emplacements
+ * à droite.
+ */
+interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
+    /**
+     * Valeur de la destination active. Chaîne libre, et non plus une énumération
+     * fermée : un consommateur a en général plus de routes que d'onglets, et c'est
+     * à lui de décider laquelle allume lequel.
+     */
+    active?: string;
+    onNavigate?: (value: string) => void;
+    /**
+     * Remplace les destinations par défaut. C'est par là que passent les libellés
+     * traduits : le composant ne peut pas connaître la langue du consommateur.
+     */
+    items?: NavItem[];
+    /** Chemin vers bledi-logo.png. */
+    logoSrc?: string;
+    /** Cible du logo. Sans `logoHref` ni `onLogo`, le logo n'est pas cliquable. */
+    logoHref?: string;
+    onLogo?: () => void;
+    /** Texte accessible du logo. */
+    logoLabel?: string;
+    /**
+     * Contrôle de notifications. Le composant n'en fournit aucun par défaut :
+     * une cloche qui ne fait rien est un mensonge d'interface. Le consommateur
+     * passe le sien, avec son compteur de non-lus.
+     */
+    bell?: React.ReactNode;
+    /** Contrôles supplémentaires à droite : déconnexion, menu de compte… */
+    actions?: React.ReactNode;
+}
+declare function TopNav({ active, onNavigate, items, logoSrc, logoHref, onLogo, logoLabel, bell, actions, style, ...rest }: TopNavProps): React.JSX.Element;
+
+/** Les cinq destinations par défaut, en français, « Publier » mise en avant. */
+declare const defaultBottomNavItems: NavItem[];
+/** Barre d'onglets mobile : quatre destinations plus l'action « Publier » surélevée. */
+interface BottomNavProps extends React.HTMLAttributes<HTMLElement> {
+    /** Valeur de la destination active. Chaîne libre — voir TopNav. */
+    active?: string;
+    onNavigate?: (value: string) => void;
+    /** Remplace les destinations par défaut, et porte les libellés traduits. */
+    items?: NavItem[];
+}
+declare function BottomNav({ active, onNavigate, items, style, ...rest }: BottomNavProps): React.JSX.Element;
 
 /** Pill segmented control on a grey track — the primary in-page switcher. */
 interface SegmentedTabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
@@ -432,17 +480,6 @@ interface StepProgressProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 declare function StepProgress({ step, total, label, stepLabel, style, ...rest }: StepProgressProps): React.JSX.Element;
 
-/**
- * Desktop app header: logo, four pill nav items, bell.
- */
-interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
-    active?: 'requests' | 'trips' | 'messages' | 'profile';
-    onNavigate?: (value: string) => void;
-    /** Path to bledi-logo.png */
-    logoSrc?: string;
-}
-declare function TopNav({ active, onNavigate, logoSrc, style, ...rest }: TopNavProps): React.JSX.Element;
-
 /** Quieter second-level switcher (Mes réservations). */
 interface UnderlineTabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
     tabs?: {
@@ -454,4 +491,4 @@ interface UnderlineTabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
 }
 declare function UnderlineTabs({ tabs, value, onChange, style, ...rest }: UnderlineTabsProps): React.JSX.Element;
 
-export { Alert, type AlertProps, Avatar, type AvatarProps, Badge, type BadgeProps, BottomNav, type BottomNavProps, Button, type ButtonProps, Card, type CardProps, Checkbox, type CheckboxProps, Chip, type ChipProps, CodeInput, type CodeInputProps, Dialog, type DialogProps, EmptyState, type EmptyStateProps, Field, type FieldProps, Icon, type IconName, type IconProps, Input, type InputProps, Logo, LogoMark, type LogoMarkProps, type LogoProps, type LogoShape, type LogoTone, LogoWordmark, type LogoWordmarkProps, OfficialTripCard, type OfficialTripCardProps, OptionToggle, type OptionToggleOption, type OptionToggleProps, PhotoUploader, type PhotoUploaderProps, ProtectionPanel, type ProtectionPanelProps, RatingStars, type RatingStarsProps, RequestCard, type RequestCardProps, RouteLine, type RouteLineProps, SegmentedTabs, type SegmentedTabsProps, Select, type SelectProps, StatusTimeline, type StatusTimelineProps, type StatusTimelineStep, StepProgress, type StepProgressProps, Switch, type SwitchProps, Textarea, type TextareaProps, Toast, type ToastProps, TopNav, type TopNavProps, TripBanner, type TripBannerProps, UnderlineTabs, type UnderlineTabsProps, VerificationRow, type VerificationRowProps, VerifiedMark, type VerifiedMarkProps, VerifiedName, type VerifiedNameProps };
+export { Alert, type AlertProps, Avatar, type AvatarProps, Badge, type BadgeProps, BottomNav, type BottomNavProps, Button, type ButtonProps, Card, type CardProps, Checkbox, type CheckboxProps, Chip, type ChipProps, CodeInput, type CodeInputProps, Dialog, type DialogProps, EmptyState, type EmptyStateProps, Field, type FieldProps, Icon, type IconName, type IconProps, Input, type InputProps, Logo, LogoMark, type LogoMarkProps, type LogoProps, type LogoShape, type LogoTone, LogoWordmark, type LogoWordmarkProps, type NavItem, OfficialTripCard, type OfficialTripCardProps, OptionToggle, type OptionToggleOption, type OptionToggleProps, PhotoUploader, type PhotoUploaderProps, ProtectionPanel, type ProtectionPanelProps, RatingStars, type RatingStarsProps, RequestCard, type RequestCardProps, RouteLine, type RouteLineProps, SegmentedTabs, type SegmentedTabsProps, Select, type SelectProps, StatusTimeline, type StatusTimelineProps, type StatusTimelineStep, StepProgress, type StepProgressProps, Switch, type SwitchProps, Textarea, type TextareaProps, Toast, type ToastProps, TopNav, type TopNavProps, TripBanner, type TripBannerProps, UnderlineTabs, type UnderlineTabsProps, VerificationRow, type VerificationRowProps, VerifiedMark, type VerifiedMarkProps, VerifiedName, type VerifiedNameProps, defaultBottomNavItems, defaultTopNavItems };

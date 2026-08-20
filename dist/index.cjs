@@ -67,7 +67,9 @@ __export(index_exports, {
   UnderlineTabs: () => UnderlineTabs,
   VerificationRow: () => VerificationRow,
   VerifiedMark: () => VerifiedMark,
-  VerifiedName: () => VerifiedName
+  VerifiedName: () => VerifiedName,
+  defaultBottomNavItems: () => defaultBottomNavItems,
+  defaultTopNavItems: () => defaultTopNavItems
 });
 module.exports = __toCommonJS(index_exports);
 
@@ -1286,24 +1288,30 @@ function Switch({ checked = false, onChange, label, hint, style, ...rest }) {
 
 // src/components/navigation/BottomNav.tsx
 var import_jsx_runtime29 = require("react/jsx-runtime");
-function BottomNav({ active = "requests", onNavigate, style, ...rest }) {
-  const items = [
-    { value: "requests", label: "Demandes", icon: "inbox" },
-    { value: "trips", label: "Mes trajets", icon: "plane" },
-    { value: "publish", label: "Publier", icon: "plus", primary: true },
-    { value: "messages", label: "Messages", icon: "message" },
-    { value: "profile", label: "Profil", icon: "user" }
-  ];
+var defaultBottomNavItems = [
+  { value: "requests", label: "Demandes", icon: "inbox" },
+  { value: "trips", label: "Mes trajets", icon: "plane" },
+  { value: "publish", label: "Publier", icon: "plus", primary: true },
+  { value: "messages", label: "Messages", icon: "message" },
+  { value: "profile", label: "Profil", icon: "user" }
+];
+function BottomNav({
+  active = "requests",
+  onNavigate,
+  items = defaultBottomNavItems,
+  style,
+  ...rest
+}) {
   return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
     "nav",
     {
       style: {
         display: "grid",
-        gridTemplateColumns: "repeat(5, 1fr)",
+        gridTemplateColumns: `repeat(${items.length}, 1fr)`,
         alignItems: "end",
         background: "var(--surface-card)",
-        borderTop: "1px solid var(--border-default)",
-        padding: "8px 8px 12px",
+        borderTop: "var(--border-width) solid var(--border-default)",
+        padding: "var(--space-2) var(--space-2) var(--space-3)",
         fontFamily: "var(--font-sans)",
         ...style
       },
@@ -1315,10 +1323,11 @@ function BottomNav({ active = "requests", onNavigate, style, ...rest }) {
             "button",
             {
               type: "button",
+              "aria-current": on ? "page" : void 0,
               onClick: () => onNavigate && onNavigate(it.value),
               style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 6, background: "transparent", border: "none", cursor: "pointer" },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { style: { width: 46, height: 46, borderRadius: "var(--radius-pill)", background: "var(--bledi-green-700)", color: "#FFF", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Icon, { name: "plus", size: 22 }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { style: { width: 46, height: 46, borderRadius: "var(--radius-pill)", background: "var(--bledi-green-700)", color: "#FFF", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Icon, { name: it.icon, size: 22 }) }),
                 /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("span", { style: { fontSize: "var(--text-2xs)", color: "var(--text-secondary)" }, children: it.label })
               ]
             },
@@ -1329,6 +1338,7 @@ function BottomNav({ active = "requests", onNavigate, style, ...rest }) {
           "button",
           {
             type: "button",
+            "aria-current": on ? "page" : void 0,
             onClick: () => onNavigate && onNavigate(it.value),
             style: {
               display: "flex",
@@ -1411,13 +1421,27 @@ function StepProgress({ step = 1, total = 5, label, stepLabel, style, ...rest })
 
 // src/components/navigation/TopNav.tsx
 var import_jsx_runtime32 = require("react/jsx-runtime");
-var topNavItems = [
+var defaultTopNavItems = [
   { value: "requests", label: "Demandes", icon: "inbox" },
   { value: "trips", label: "Mes trajets", icon: "plane" },
   { value: "messages", label: "Messages", icon: "message" },
   { value: "profile", label: "Profil", icon: "user" }
 ];
-function TopNav({ active = "requests", onNavigate, logoSrc, style, ...rest }) {
+function TopNav({
+  active = "requests",
+  onNavigate,
+  items = defaultTopNavItems,
+  logoSrc,
+  logoHref,
+  onLogo,
+  logoLabel = "Bledi",
+  bell,
+  actions,
+  style,
+  ...rest
+}) {
+  const marque = logoSrc ? /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("img", { src: logoSrc, alt: logoLabel, style: { width: 44, height: 44, borderRadius: "var(--radius-pill)", display: "block" } }) : /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("span", { style: { fontWeight: "var(--weight-bold)", color: "var(--text-brand)", fontSize: "var(--text-lg)" }, children: logoLabel });
+  const styleMarque = { display: "flex", alignItems: "center", background: "transparent", border: "none", padding: 0, cursor: "pointer" };
   return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
     "header",
     {
@@ -1428,24 +1452,25 @@ function TopNav({ active = "requests", onNavigate, logoSrc, style, ...rest }) {
         height: "var(--nav-height)",
         padding: "0 var(--space-6)",
         background: "var(--color-bg)",
-        borderBottom: "1px solid var(--border-default)",
+        borderBottom: "var(--border-width) solid var(--border-default)",
         fontFamily: "var(--font-sans)",
         ...style
       },
       ...rest,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("a", { href: "#", style: { display: "flex", alignItems: "center" }, children: logoSrc ? /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("img", { src: logoSrc, alt: "Bledi", style: { width: 44, height: 44, borderRadius: "var(--radius-pill)", display: "block" } }) : /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("span", { style: { fontWeight: "var(--weight-bold)", color: "var(--text-brand)", fontSize: "var(--text-lg)" }, children: "Bledi" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("nav", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)" }, children: topNavItems.map((it) => {
+        logoHref ? /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("a", { href: logoHref, "aria-label": logoLabel, style: { ...styleMarque, textDecoration: "none" }, children: marque }) : onLogo ? /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { type: "button", onClick: onLogo, "aria-label": logoLabel, style: styleMarque, children: marque }) : /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("span", { style: { display: "flex", alignItems: "center" }, children: marque }),
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("nav", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)" }, children: items.map((it) => {
           const on = it.value === active;
           return /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(
             "button",
             {
               type: "button",
+              "aria-current": on ? "page" : void 0,
               onClick: () => onNavigate && onNavigate(it.value),
               style: {
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "8px",
+                gap: "var(--space-2)",
                 fontFamily: "inherit",
                 fontSize: "var(--text-base)",
                 color: on ? "#FFFFFF" : "var(--text-primary)",
@@ -1464,7 +1489,10 @@ function TopNav({ active = "requests", onNavigate, logoSrc, style, ...rest }) {
             it.value
           );
         }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("button", { type: "button", style: { background: "transparent", border: "none", color: "var(--text-primary)", cursor: "pointer", padding: 8 }, children: /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(Icon, { name: "bell", size: 20 }) })
+        /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)" }, children: [
+          bell,
+          actions
+        ] })
       ]
     }
   );
@@ -1536,6 +1564,8 @@ function UnderlineTabs({ tabs = [], value, onChange, style, ...rest }) {
   UnderlineTabs,
   VerificationRow,
   VerifiedMark,
-  VerifiedName
+  VerifiedName,
+  defaultBottomNavItems,
+  defaultTopNavItems
 });
 //# sourceMappingURL=index.cjs.map

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TopNav, BottomNav } from '../../src/components';
+import { TopNav, BottomNav, Icon } from '../../src/components';
 import { Requests } from './Requests';
 import { Publish } from './Publish';
 import { Reservations } from './Reservations';
@@ -23,7 +23,21 @@ export function App() {
   return (
     <>
       <div className="desktop-nav">
-        <TopNav active={topNavActive} onNavigate={go} logoSrc={logoUrl} />
+        <TopNav
+          active={topNavActive}
+          onNavigate={go}
+          logoSrc={logoUrl}
+          onLogo={() => go('requests')}
+          /* La cloche n'est plus fournie par le composant : c'est au produit
+             d'y brancher son compteur de non-lus. La demo en pose une inerte
+             pour conserver la composition d'origine. */
+          bell={
+            <button type="button" aria-label="Notifications"
+              style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', padding: 8 }}>
+              <Icon name="bell" size={20} />
+            </button>
+          }
+        />
       </div>
       <main>
         {page === 'requests' ? <Requests /> : null}
