@@ -54,9 +54,11 @@ export function RequestCard({ badges = [], category, carrier, flight, route = {}
           </div>
         ) : null}
 
-        <h3 style={{ margin: 'var(--space-4) 0 var(--space-5)', fontSize: 'var(--text-lg)', fontWeight: 'var(--weight-semibold)', color: 'var(--text-brand)' }}>
-          {carrier} <span style={{ marginLeft: 6 }}>{flight}</span>
-        </h3>
+        {carrier || flight ? (
+          <h3 style={{ margin: 'var(--space-4) 0 var(--space-5)', fontSize: 'var(--text-lg)', fontWeight: 'var(--weight-semibold)', color: 'var(--text-brand)' }}>
+            {carrier}{carrier && flight ? <span style={{ marginLeft: 6 }}>{flight}</span> : flight}
+          </h3>
+        ) : null}
 
         <RouteLine {...route} />
 

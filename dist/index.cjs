@@ -1,3 +1,4 @@
+'use client';
 "use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -713,7 +714,7 @@ function ProtectionPanel({ title = "Protection Bledi", description, points = [],
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { style: { width: 38, height: 38, borderRadius: "var(--radius-pill)", background: "rgba(233,185,73,0.16)", color: "var(--text-accent)", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Icon, { name: "shield-check", size: 18 }) }),
         /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h3", { style: { margin: "var(--space-4) 0 var(--space-2)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-semibold)" }, children: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { style: { margin: 0, fontSize: "var(--text-sm)", lineHeight: "var(--leading-normal)", color: "var(--text-on-dark-muted)" }, children: description }),
+        description ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { style: { margin: 0, fontSize: "var(--text-sm)", lineHeight: "var(--leading-normal)", color: "var(--text-on-dark-muted)" }, children: description }) : null,
         /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("ul", { style: { listStyle: "none", margin: "var(--space-5) 0 0", padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-3)" }, children: points.map((p) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("li", { style: { display: "flex", alignItems: "center", gap: 10, fontSize: "var(--text-sm)" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { style: { color: "var(--text-accent)", display: "inline-flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Icon, { name: "check", size: 15 }) }),
           p
@@ -737,7 +738,18 @@ function ProtectionPanel({ title = "Protection Bledi", description, points = [],
 
 // src/components/domain/RouteLine.tsx
 var import_jsx_runtime14 = require("react/jsx-runtime");
-function RouteLine({ from, fromCode, fromTime, to, toCode, toTime, style, ...rest }) {
+function RouteLine({
+  from,
+  fromCode,
+  fromTime,
+  to,
+  toCode,
+  toTime,
+  fromLabel = "D\xE9part",
+  toLabel = "Arriv\xE9e",
+  style,
+  ...rest
+}) {
   const col = { display: "flex", flexDirection: "column", gap: 4, minWidth: 0 };
   const cap = { fontSize: "var(--text-2xs)", letterSpacing: "var(--tracking-caps)", textTransform: "uppercase", color: "var(--text-secondary)" };
   const place = { fontSize: "var(--text-base)", color: "var(--text-primary)" };
@@ -745,21 +757,21 @@ function RouteLine({ from, fromCode, fromTime, to, toCode, toTime, style, ...res
   const code = { fontSize: "var(--text-xs)", color: "var(--text-secondary)" };
   return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: "var(--space-4)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: col, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: cap, children: "D\xE9part" }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: place, children: from }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { style: { display: "flex", alignItems: "baseline", gap: 8 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: code, children: fromCode }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: time, children: fromTime })
-      ] })
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: cap, children: fromLabel }),
+      from ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: place, children: from }) : null,
+      fromCode || fromTime ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { style: { display: "flex", alignItems: "baseline", gap: 8 }, children: [
+        fromCode ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: code, children: fromCode }) : null,
+        fromTime ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: time, children: fromTime }) : null
+      ] }) : null
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { width: 34, height: 34, borderRadius: "var(--radius-pill)", background: "var(--surface-notice)", color: "var(--bledi-gold-600)", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Icon, { name: "arrow-right", size: 16 }) }),
     /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { ...col, alignItems: "flex-end", textAlign: "right" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: cap, children: "Arriv\xE9e" }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: place, children: to }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { style: { display: "flex", alignItems: "baseline", gap: 8 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: code, children: toCode }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: time, children: toTime })
-      ] })
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: cap, children: toLabel }),
+      to ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: place, children: to }) : null,
+      toCode || toTime ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { style: { display: "flex", alignItems: "baseline", gap: 8 }, children: [
+        toCode ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: code, children: toCode }) : null,
+        toTime ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: time, children: toTime }) : null
+      ] }) : null
     ] })
   ] });
 }
@@ -784,11 +796,10 @@ function RequestCard({ badges = [], category, carrier, flight, route = {}, date,
         /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { padding: "var(--space-5)", borderBottom: "1px solid var(--border-default)" }, children: [
           /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px", justifyContent: "flex-start" }, children: badges }),
           category ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { display: "flex", justifyContent: "flex-end", marginTop: "8px" }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Badge, { tone: "neutral", children: category }) }) : null,
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("h3", { style: { margin: "var(--space-4) 0 var(--space-5)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-semibold)", color: "var(--text-brand)" }, children: [
+          carrier || flight ? /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("h3", { style: { margin: "var(--space-4) 0 var(--space-5)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-semibold)", color: "var(--text-brand)" }, children: [
             carrier,
-            " ",
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { marginLeft: 6 }, children: flight })
-          ] }),
+            carrier && flight ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { marginLeft: 6 }, children: flight }) : flight
+          ] }) : null,
           /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(RouteLine, { ...route }),
           date ? /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, marginTop: "var(--space-4)", fontSize: "var(--text-sm)", color: "var(--text-secondary)" }, children: [
             /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Icon, { name: "calendar", size: 14 }),
@@ -1086,11 +1097,17 @@ function CodeInput({ length = 6, value = "", onChange, style, ...rest }) {
 
 // src/components/forms/Field.tsx
 var import_jsx_runtime23 = require("react/jsx-runtime");
-function Field({ label, hint, children, style, ...rest }) {
+function Field({ label, hint, htmlFor, children, style, ...rest }) {
+  const styleLibelle = {
+    display: "block",
+    fontSize: "var(--text-sm)",
+    color: "var(--text-secondary)",
+    marginBottom: "var(--space-2)"
+  };
   return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    label ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { fontSize: "var(--text-sm)", color: "var(--text-secondary)", marginBottom: "8px" }, children: label }) : null,
+    label ? htmlFor ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("label", { htmlFor, style: styleLibelle, children: label }) : /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: styleLibelle, children: label }) : null,
     children,
-    hint ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { fontSize: "var(--text-xs)", color: "var(--text-secondary)", marginTop: "8px" }, children: hint }) : null
+    hint ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { fontSize: "var(--text-xs)", color: "var(--text-secondary)", marginTop: "var(--space-2)" }, children: hint }) : null
   ] });
 }
 

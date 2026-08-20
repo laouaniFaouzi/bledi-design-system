@@ -26,7 +26,9 @@ export function ProtectionPanel({ title = 'Protection Bledi', description, point
         <Icon name="shield-check" size={18} />
       </span>
       <h3 style={{ margin: 'var(--space-4) 0 var(--space-2)', fontSize: 'var(--text-lg)', fontWeight: 'var(--weight-semibold)' }}>{title}</h3>
-      <p style={{ margin: 0, fontSize: 'var(--text-sm)', lineHeight: 'var(--leading-normal)', color: 'var(--text-on-dark-muted)' }}>{description}</p>
+      {description ? (
+        <p style={{ margin: 0, fontSize: 'var(--text-sm)', lineHeight: 'var(--leading-normal)', color: 'var(--text-on-dark-muted)' }}>{description}</p>
+      ) : null}
       <ul style={{ listStyle: 'none', margin: 'var(--space-5) 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
         {points.map((p) => (
           <li key={p} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 'var(--text-sm)' }}>

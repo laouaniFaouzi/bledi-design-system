@@ -14,6 +14,12 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
   iconRight?: React.ReactNode;
   /** Render as another element, e.g. "a" */
   as?: 'button' | 'a';
+  /** Cible du lien quand `as="a"`. Absent, le composant n-etait pas composable avec un routeur. */
+  href?: string;
+  target?: string;
+  rel?: string;
+  /** Type du bouton quand `as="button"`. Sans lui, impossible de declarer un submit. */
+  type?: 'button' | 'submit' | 'reset';
   children?: React.ReactNode;
 }
 

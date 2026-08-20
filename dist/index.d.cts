@@ -86,6 +86,12 @@ interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
     iconRight?: React.ReactNode;
     /** Render as another element, e.g. "a" */
     as?: 'button' | 'a';
+    /** Cible du lien quand `as="a"`. Absent, le composant n-etait pas composable avec un routeur. */
+    href?: string;
+    target?: string;
+    rel?: string;
+    /** Type du bouton quand `as="button"`. Sans lui, impossible de declarer un submit. */
+    type?: 'button' | 'submit' | 'reset';
     children?: React.ReactNode;
 }
 declare function Button({ variant, size, block, disabled, iconLeft, iconRight, as, style, children, ...rest }: ButtonProps): React.JSX.Element;
@@ -240,8 +246,12 @@ interface RouteLineProps extends React.HTMLAttributes<HTMLDivElement> {
     to?: string;
     toCode?: string;
     toTime?: string;
+    /** Surcharge « Départ ». Les consommateurs qui traduisent passent leur propre chaîne. */
+    fromLabel?: string;
+    /** Surcharge « Arrivée ». */
+    toLabel?: string;
 }
-declare function RouteLine({ from, fromCode, fromTime, to, toCode, toTime, style, ...rest }: RouteLineProps): React.JSX.Element;
+declare function RouteLine({ from, fromCode, fromTime, to, toCode, toTime, fromLabel, toLabel, style, ...rest }: RouteLineProps): React.JSX.Element;
 
 /** Dark green confirmation banner that carries the chosen trip through the rest of the flow. */
 interface TripBannerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -321,9 +331,16 @@ declare function CodeInput({ length, value, onChange, style, ...rest }: CodeInpu
 interface FieldProps extends React.HTMLAttributes<HTMLDivElement> {
     label?: string;
     hint?: string;
+    /**
+     * `id` du contrôle décrit. Renseigné, le libellé devient un vrai
+     * `<label for>` : cliquer dessus focalise le champ, et un lecteur d'écran
+     * l'annonce une seule fois. Sans lui le libellé reste un `<div>`, faute de
+     * cible à désigner.
+     */
+    htmlFor?: string;
     children?: React.ReactNode;
 }
-declare function Field({ label, hint, children, style, ...rest }: FieldProps): React.JSX.Element;
+declare function Field({ label, hint, htmlFor, children, style, ...rest }: FieldProps): React.JSX.Element;
 
 /** Hairline rounded text input on white. */
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
