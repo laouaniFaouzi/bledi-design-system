@@ -92,6 +92,13 @@ interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
     rel?: string;
     /** Type du bouton quand `as="button"`. Sans lui, impossible de declarer un submit. */
     type?: 'button' | 'submit' | 'reset';
+    /**
+     * `name` et `value` du bouton de soumission. Necessaires des qu-un formulaire
+     * porte plusieurs actions : c-est la paire envoyee au serveur pour savoir
+     * laquelle a ete choisie.
+     */
+    name?: string;
+    value?: string;
     children?: React.ReactNode;
 }
 declare function Button({ variant, size, block, disabled, iconLeft, iconRight, as, style, children, ...rest }: ButtonProps): React.JSX.Element;
