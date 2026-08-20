@@ -285,6 +285,7 @@ function Badge({ tone = "neutral", icon, caps = false, style, children, ...rest 
 }
 
 // src/components/core/Button.tsx
+import * as React from "react";
 import { jsxs as jsxs4 } from "react/jsx-runtime";
 var btnBase = {
   display: "inline-flex",
@@ -322,24 +323,37 @@ function Button({
   iconLeft,
   iconRight,
   as = "button",
+  asChild = false,
   style,
   children,
   ...rest
 }) {
+  const styleFinal = {
+    ...btnBase,
+    ...btnSizes[size],
+    ...btnVariants[variant],
+    width: block ? "100%" : void 0,
+    opacity: disabled ? 0.45 : 1,
+    pointerEvents: disabled ? "none" : void 0,
+    ...style
+  };
+  if (asChild && React.isValidElement(children)) {
+    const enfant = children;
+    return React.cloneElement(
+      enfant,
+      // Le style de l-enfant l-emporte : c-est lui qu-on habille, pas l-inverse.
+      { ...rest, style: { ...styleFinal, ...enfant.props.style } },
+      iconLeft,
+      enfant.props.children,
+      iconRight
+    );
+  }
   const Tag = as;
   return /* @__PURE__ */ jsxs4(
     Tag,
     {
       disabled: Tag === "button" ? disabled : void 0,
-      style: {
-        ...btnBase,
-        ...btnSizes[size],
-        ...btnVariants[variant],
-        width: block ? "100%" : void 0,
-        opacity: disabled ? 0.45 : 1,
-        pointerEvents: disabled ? "none" : void 0,
-        ...style
-      },
+      style: styleFinal,
       ...rest,
       children: [
         iconLeft,
@@ -707,7 +721,27 @@ function RouteLine({
 
 // src/components/domain/RequestCard.tsx
 import { jsx as jsx13, jsxs as jsxs12 } from "react/jsx-runtime";
-function RequestCard({ badges = [], category, carrier, flight, route = {}, date, author, authorVerified = false, markSrc, authorRole = "Membre Bledi", budget, message, details, notices, action, style, ...rest }) {
+function RequestCard({
+  badges = [],
+  category,
+  carrier,
+  flight,
+  route = {},
+  date,
+  author,
+  authorVerified = false,
+  markSrc,
+  authorRole,
+  budget,
+  budgetLabel = "Budget propos\xE9",
+  routeLabels,
+  message,
+  details,
+  notices,
+  action,
+  style,
+  ...rest
+}) {
   return /* @__PURE__ */ jsxs12(
     "article",
     {
@@ -729,26 +763,26 @@ function RequestCard({ badges = [], category, carrier, flight, route = {}, date,
             carrier,
             carrier && flight ? /* @__PURE__ */ jsx13("span", { style: { marginLeft: 6 }, children: flight }) : flight
           ] }) : null,
-          /* @__PURE__ */ jsx13(RouteLine, { ...route }),
+          /* @__PURE__ */ jsx13(RouteLine, { ...route, fromLabel: routeLabels?.from, toLabel: routeLabels?.to }),
           date ? /* @__PURE__ */ jsxs12("div", { style: { display: "flex", alignItems: "center", gap: 8, marginTop: "var(--space-4)", fontSize: "var(--text-sm)", color: "var(--text-secondary)" }, children: [
             /* @__PURE__ */ jsx13(Icon, { name: "calendar", size: 14 }),
             date
           ] }) : null
         ] }),
         /* @__PURE__ */ jsxs12("div", { style: { padding: "var(--space-5)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }, children: [
-          /* @__PURE__ */ jsxs12("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-4)" }, children: [
-            /* @__PURE__ */ jsxs12("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-3)" }, children: [
-              /* @__PURE__ */ jsx13(Avatar, { initial: (author || "?").charAt(0) }),
+          author || budget ? /* @__PURE__ */ jsxs12("div", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-4)" }, children: [
+            author ? /* @__PURE__ */ jsxs12("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-3)" }, children: [
+              /* @__PURE__ */ jsx13(Avatar, { initial: author.charAt(0) }),
               /* @__PURE__ */ jsxs12("div", { children: [
                 /* @__PURE__ */ jsx13(VerifiedName, { name: author, verified: authorVerified, markSrc }),
-                /* @__PURE__ */ jsx13("div", { style: { fontSize: "var(--text-xs)", color: "var(--text-secondary)" }, children: authorRole })
+                authorRole ? /* @__PURE__ */ jsx13("div", { style: { fontSize: "var(--text-xs)", color: "var(--text-secondary)" }, children: authorRole }) : null
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs12("div", { style: { textAlign: "right" }, children: [
-              /* @__PURE__ */ jsx13("div", { style: { fontSize: "var(--text-2xs)", letterSpacing: "var(--tracking-caps)", textTransform: "uppercase", color: "var(--text-secondary)" }, children: "Budget propos\xE9" }),
+            ] }) : /* @__PURE__ */ jsx13("span", {}),
+            budget ? /* @__PURE__ */ jsxs12("div", { style: { textAlign: "right" }, children: [
+              /* @__PURE__ */ jsx13("div", { style: { fontSize: "var(--text-2xs)", letterSpacing: "var(--tracking-caps)", textTransform: "uppercase", color: "var(--text-secondary)" }, children: budgetLabel }),
               /* @__PURE__ */ jsx13("div", { style: { fontSize: "var(--text-xl)", fontWeight: "var(--weight-semibold)" }, children: budget })
-            ] })
-          ] }),
+            ] }) : null
+          ] }) : null,
           message ? /* @__PURE__ */ jsx13("p", { style: { margin: 0, fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)" }, children: message }) : null,
           details ? /* @__PURE__ */ jsx13("div", { style: { background: "var(--surface-muted)", borderRadius: "var(--radius-lg)", padding: "var(--space-4)", fontSize: "var(--text-sm)", lineHeight: "var(--leading-relaxed)", color: "var(--text-primary)" }, children: details }) : null,
           notices,
@@ -980,10 +1014,10 @@ function Checkbox({ checked = false, onChange, label, hint, style, ...rest }) {
 }
 
 // src/components/forms/CodeInput.tsx
-import * as React from "react";
+import * as React2 from "react";
 import { jsx as jsx20 } from "react/jsx-runtime";
 function CodeInput({ length = 6, value = "", onChange, style, ...rest }) {
-  const refs = React.useRef([]);
+  const refs = React2.useRef([]);
   const chars = Array.from({ length }, (_, i) => value[i] || "");
   const set = (i, ch) => {
     const next = chars.slice();

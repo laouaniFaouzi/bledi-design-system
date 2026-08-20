@@ -23,6 +23,13 @@ export interface RequestCardProps extends React.HTMLAttributes<HTMLElement> {
   /** Chemin vers bledi-b-mark.png depuis la page hôte */
   markSrc?: string;
   authorRole?: string;
+  /**
+   * Libelle au-dessus du montant. Par defaut « Budget proposé » ; les
+   * consommateurs qui traduisent passent le leur.
+   */
+  budgetLabel?: string;
+  /** Surcharge « Départ » / « Arrivée » de la RouteLine interne. */
+  routeLabels?: { from?: string; to?: string };
   /** Formatted amount including the € sign */
   budget?: string;
   message?: string;
@@ -34,7 +41,12 @@ export interface RequestCardProps extends React.HTMLAttributes<HTMLElement> {
   action?: React.ReactNode;
 }
 
-export function RequestCard({ badges = [], category, carrier, flight, route = {}, date, author, authorVerified = false, markSrc, authorRole = 'Membre Bledi', budget, message, details, notices, action, style, ...rest }: RequestCardProps) {
+export function RequestCard({
+  badges = [], category, carrier, flight, route = {}, date, author,
+  authorVerified = false, markSrc, authorRole, budget,
+  budgetLabel = 'Budget proposé', routeLabels, message, details, notices, action,
+  style, ...rest
+}: RequestCardProps) {
   return (
     <article
       style={{
@@ -60,7 +72,7 @@ export function RequestCard({ badges = [], category, carrier, flight, route = {}
           </h3>
         ) : null}
 
-        <RouteLine {...route} />
+        <RouteLine {...route} fromLabel={routeLabels?.from} toLabel={routeLabels?.to} />
 
         {date ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 'var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
@@ -70,19 +82,29 @@ export function RequestCard({ badges = [], category, carrier, flight, route = {}
       </div>
 
       <div style={{ padding: 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-4)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-            <Avatar initial={(author || '?').charAt(0)} />
-            <div>
-              <VerifiedName name={author} verified={authorVerified} markSrc={markSrc} />
-              <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)' }}>{authorRole}</div>
-            </div>
+        {author || budget ? (
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-4)' }}>
+            {/* Sans `author`, on n-affiche pas une pastille « ? » suivie d-un nom
+                vide : mieux vaut ne rien dire que d-inventer un auteur. */}
+            {author ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                <Avatar initial={author.charAt(0)} />
+                <div>
+                  <VerifiedName name={author} verified={authorVerified} markSrc={markSrc} />
+                  {authorRole ? (
+                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)' }}>{authorRole}</div>
+                  ) : null}
+                </div>
+              </div>
+            ) : <span />}
+            {budget ? (
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: 'var(--text-2xs)', letterSpacing: 'var(--tracking-caps)', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>{budgetLabel}</div>
+                <div style={{ fontSize: 'var(--text-xl)', fontWeight: 'var(--weight-semibold)' }}>{budget}</div>
+              </div>
+            ) : null}
           </div>
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 'var(--text-2xs)', letterSpacing: 'var(--tracking-caps)', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>Budget proposé</div>
-            <div style={{ fontSize: 'var(--text-xl)', fontWeight: 'var(--weight-semibold)' }}>{budget}</div>
-          </div>
-        </div>
+        ) : null}
 
         {message ? <p style={{ margin: 0, fontSize: 'var(--text-base)', lineHeight: 'var(--leading-normal)' }}>{message}</p> : null}
 

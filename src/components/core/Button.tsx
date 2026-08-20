@@ -14,6 +14,14 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
   iconRight?: React.ReactNode;
   /** Render as another element, e.g. "a" */
   as?: 'button' | 'a';
+  /**
+   * Rend l-unique enfant a la place du bouton, en lui appliquant les styles.
+   * C-est ainsi qu-on compose avec le lien d-un routeur — `next/link`, par
+   * exemple — sans imbriquer deux <a> ni perdre la navigation cote client :
+   *
+   *   <Button asChild><Link href="/x">Aller</Link></Button>
+   */
+  asChild?: boolean;
   /** Cible du lien quand `as="a"`. Absent, le composant n-etait pas composable avec un routeur. */
   href?: string;
   target?: string;
@@ -55,19 +63,36 @@ const btnVariants = {
 
 export function Button({
   variant = 'primary', size = 'md', block = false, disabled = false,
-  iconLeft, iconRight, as = 'button', style, children, ...rest
+  iconLeft, iconRight, as = 'button', asChild = false, style, children, ...rest
 }: ButtonProps) {
+  const styleFinal: React.CSSProperties = {
+    ...btnBase, ...btnSizes[size], ...btnVariants[variant],
+    width: block ? '100%' : undefined,
+    opacity: disabled ? 0.45 : 1,
+    pointerEvents: disabled ? 'none' : undefined,
+    ...style,
+  };
+
+  if (asChild && React.isValidElement(children)) {
+    const enfant = children as React.ReactElement<{
+      style?: React.CSSProperties;
+      children?: React.ReactNode;
+    }>;
+    return React.cloneElement(
+      enfant,
+      // Le style de l-enfant l-emporte : c-est lui qu-on habille, pas l-inverse.
+      { ...rest, style: { ...styleFinal, ...enfant.props.style } },
+      iconLeft,
+      enfant.props.children,
+      iconRight,
+    );
+  }
+
   const Tag = as;
   return (
     <Tag
       disabled={Tag === 'button' ? disabled : undefined}
-      style={{
-        ...btnBase, ...btnSizes[size], ...btnVariants[variant],
-        width: block ? '100%' : undefined,
-        opacity: disabled ? 0.45 : 1,
-        pointerEvents: disabled ? 'none' : undefined,
-        ...style,
-      }}
+      style={styleFinal}
       {...rest}
     >
       {iconLeft}

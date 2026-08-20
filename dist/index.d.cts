@@ -86,6 +86,14 @@ interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
     iconRight?: React.ReactNode;
     /** Render as another element, e.g. "a" */
     as?: 'button' | 'a';
+    /**
+     * Rend l-unique enfant a la place du bouton, en lui appliquant les styles.
+     * C-est ainsi qu-on compose avec le lien d-un routeur — `next/link`, par
+     * exemple — sans imbriquer deux <a> ni perdre la navigation cote client :
+     *
+     *   <Button asChild><Link href="/x">Aller</Link></Button>
+     */
+    asChild?: boolean;
     /** Cible du lien quand `as="a"`. Absent, le composant n-etait pas composable avec un routeur. */
     href?: string;
     target?: string;
@@ -101,7 +109,7 @@ interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
     value?: string;
     children?: React.ReactNode;
 }
-declare function Button({ variant, size, block, disabled, iconLeft, iconRight, as, style, children, ...rest }: ButtonProps): React.JSX.Element;
+declare function Button({ variant, size, block, disabled, iconLeft, iconRight, as, asChild, style, children, ...rest }: ButtonProps): React.JSX.Element;
 
 /** The Bledi surface: white hairline card, or the dark green gradient panel. */
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -233,6 +241,16 @@ interface RequestCardProps extends React.HTMLAttributes<HTMLElement> {
     /** Chemin vers bledi-b-mark.png depuis la page hôte */
     markSrc?: string;
     authorRole?: string;
+    /**
+     * Libelle au-dessus du montant. Par defaut « Budget proposé » ; les
+     * consommateurs qui traduisent passent le leur.
+     */
+    budgetLabel?: string;
+    /** Surcharge « Départ » / « Arrivée » de la RouteLine interne. */
+    routeLabels?: {
+        from?: string;
+        to?: string;
+    };
     /** Formatted amount including the € sign */
     budget?: string;
     message?: string;
@@ -243,7 +261,7 @@ interface RequestCardProps extends React.HTMLAttributes<HTMLElement> {
     /** Usually <Button block>Proposer mon aide</Button> */
     action?: React.ReactNode;
 }
-declare function RequestCard({ badges, category, carrier, flight, route, date, author, authorVerified, markSrc, authorRole, budget, message, details, notices, action, style, ...rest }: RequestCardProps): React.JSX.Element;
+declare function RequestCard({ badges, category, carrier, flight, route, date, author, authorVerified, markSrc, authorRole, budget, budgetLabel, routeLabels, message, details, notices, action, style, ...rest }: RequestCardProps): React.JSX.Element;
 
 /** Departure → arrival row with airport/port codes, times and the gold arrow node. */
 interface RouteLineProps extends React.HTMLAttributes<HTMLDivElement> {
